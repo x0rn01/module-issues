@@ -16,8 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IssueController::class, 'index'])->name('issue.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::post('/store', [IssueController::class, 'store'])->name('issue.store');
+
 
 require __DIR__.'/auth.php';

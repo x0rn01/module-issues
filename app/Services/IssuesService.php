@@ -20,21 +20,21 @@ class IssuesService {
         $this->client=$client;
     }
 
-    public function create($title, $description) {
-        //TODO: query params {repo} and {owner} are hardcoded at the moment, shouldn't we use a configuration settings?
-        $body = json_encode([
+    //TODO: query params {repo} and {owner} are hardcoded at the moment, shouldn't we use a configuration settings?
+    public function create($title, $body, $category) {
+        $json = json_encode([
             'title' => $title,
-            'body' => $description,
-            'labels' => ['UI'],
+            'body' => $body,
+            'labels' => array($category),
         ]);
 
         //TODO: should we handle response status ?
-        $this->client->request('POST', '/repos/x0rn01/module-issues/issues', ['body' => $body]);
+        $this->client->request('POST', '/repos/x0rn01/module-issues/issues', ['body' => $json]);
     }
 
     public function get(): Collection {
-        //TODO: query params {repo} and {owner} are hardcoded at the moment, shouldn't we use a configuration settings?
         $response = $this->client->get('repos/x0rn01/module-issues/issues');
+
         $body = json_decode((string)$response->getBody(), true);
 
         return collect($body)->map(function($issue) {

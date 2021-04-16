@@ -37,9 +37,11 @@ class IssueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, IssuesService $issuesService)
     {
-        //
+        $issuesService->create($request->get('title'), $request->get('body'), $request->get('category'));
+        // TODO: guess we shouldn't refresh by this way
+        return redirect('/');
     }
 
     /**
